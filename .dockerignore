@@ -1,0 +1,18 @@
+# Exclude the Go workspace and unnecessary files
+*.go
+*.mod
+*.sum
+Dockerfile
+README.md
+*.log
+*.test
+*.out
+*.html
+.git/
+.vscode/
+.idea/
+coverage.out
+coverage.html
+
+# Keep config files
+!*.yaml
