@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "2adbda70-4184-4dcc-be1d-a3ce880e17fa",
+		"name": "Blu-Installments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6968468"
+	},
+	"item": [
+		{
+			"name": "POST Installment - Calculate Installment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicle_type\": \"mobil\",\n    \"vehicle_condition\": \"bekas\",\n    \"vehicle_year\": 2016,\n    \"total_loan_amount\": 100000000,\n    \"down_payment\": 25000000,\n    \"tenure\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/v1/installment/calculate-monthly",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"installment",
+						"calculate-monthly"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "[200] - success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicle_type\": \"mobil\",\n    \"vehicle_condition\": \"bekas\",\n    \"vehicle_year\": 2016,\n    \"total_loan_amount\": 100000000,\n    \"down_payment\": 25000000,\n    \"tenure\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/installment/calculate-monthly",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"installment",
+								"calculate-monthly"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Oct 2024 14:20:23 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "338"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"error\": null,\n    \"data\": [\n        {\n            \"year\": \"Tahun 1\",\n            \"monthly_installment\": \"Rp 2250000.00/bln\",\n            \"interest_rate\": \"Suku Bunga : 8.00%\"\n        },\n        {\n            \"year\": \"Tahun 2\",\n            \"monthly_installment\": \"Rp 2432250.00/bln\",\n            \"interest_rate\": \"Suku Bunga : 8.10%\"\n        },\n        {\n            \"year\": \"Tahun 3\",\n            \"monthly_installment\": \"Rp 2641423.50/bln\",\n            \"interest_rate\": \"Suku Bunga : 8.60%\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}
