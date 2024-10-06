@@ -11,9 +11,6 @@ type BaseResponse struct {
 	Data    any    `json:"data"`
 }
 
-type MonthlyInstallment struct {
-}
-
 type CalculateMonthlyInstallmentResponse struct {
 	Year               string `json:"year"`
 	MonthlyInstallment string `json:"monthly_installment"`

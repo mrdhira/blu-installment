@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: blu_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: thisisrootpassword
+      MYSQL_DATABASE: blu_db
+      MYSQL_USER: blu_svc_user
+      MYSQL_PASSWORD: thisissvcpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - blu_network
+
+  blu_installment:
+    build:
+      context: .
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: blu_svc_user
+      DB_PASSWORD: thisissvcpassword
+      DB_NAME: blu_db
+    networks:
+      - blu_network
+    ports:
+      - "8000:8000"
+
+volumes:
+  db_data:
+
+networks:
+  blu_network:
+    driver: bridge

@@ -13,3 +13,7 @@ const (
 	VCNew    VehicleCondition = "baru"
 	VCSecond VehicleCondition = "bekas"
 )
+
+const (
+	CtxSQLTx = "sql_tx"
+)

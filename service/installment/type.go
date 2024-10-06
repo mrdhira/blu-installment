@@ -8,8 +8,15 @@ import (
 
 type installmentSvc struct {
 	logger *slog.Logger
+	// monthlyInstallmentRepo repository.IMonthlyInstallment
 }
 
-func New(logger *slog.Logger) service.IInstallmentService {
-	return &installmentSvc{logger}
+func New(
+	logger *slog.Logger,
+	// monthlyInstallmentRepo repository.IMonthlyInstallment,
+) service.IInstallmentService {
+	return &installmentSvc{
+		logger,
+		// monthlyInstallmentRepo,
+	}
 }

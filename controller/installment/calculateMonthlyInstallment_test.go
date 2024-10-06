@@ -18,7 +18,9 @@ func TestCalculateMonthlyInstallment(t *testing.T) {
 	// Init Test
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{}))
 
-	installmentSvc := installmentService.New(logger)
+	installmentSvc := installmentService.New(
+		logger,
+	)
 	installmentCtrl := New(logger, installmentSvc)
 
 	mux := http.NewServeMux()

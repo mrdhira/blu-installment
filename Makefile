@@ -3,6 +3,9 @@ APP_NAME=blu-installment
 DOCKER_IMAGE=$(APP_NAME):latest
 DOCKERFILE_PATH=./Dockerfile
 GO_FILES=$(wildcard *.go)
+MIGRATION_DIR=./migration
+DB_URL="blu_svc_user:thisissvcpassword@tcp(mysql:3306)/blu_db?parseTime=true"
+
 
 # Default target
 .PHONY: all
@@ -24,7 +27,7 @@ run:
 .PHONY: run-args
 run-args:
 	@echo "Running the application in a Docker container with arguments..."
-	docker run --rm $(DOCKER_IMAGE) --config /path/to/config.yaml --secret /path/to/secret.yaml
+	docker run --rm $(DOCKER_IMAGE) --config /path/to/config.yaml
 
 # Clean up any dangling Docker images or containers
 .PHONY: clean
@@ -36,6 +39,58 @@ clean:
 # Rebuild the Docker image
 .PHONY: rebuild
 rebuild: clean build
+
+# Build via docker-compose
+
+# Build the Go application (Docker build)
+.PHONY: build-compose
+build-compose:
+	@echo "Building the Docker image..."
+	docker-compose build blu_installment
+
+# Run the application using Docker Compose
+.PHONY: up-compose
+up-compose:
+	@echo "Starting the application and MySQL database..."
+	docker-compose up -d
+
+# Stop the application
+.PHONY: down-compose
+down-compose:
+	@echo "Stopping the application and MySQL database..."
+	docker-compose down
+
+# Create a new migration file
+.PHONY: create-migration
+create-migration:
+	@echo "Creating new migration file..."
+	goose -dir $(MIGRATION_DIR) create $(name) sql
+
+# Run migrations
+.PHONY: migrate
+migrate:
+	@echo "Running database migrations..."
+	docker-compose exec blu_installment goose -dir $(MIGRATION_DIR) mysql "$(DB_URL)" up
+
+# Rollback last migration
+.PHONY: rollback
+rollback:
+	@echo "Rolling back the last migration..."
+	docker-compose exec blu_installment goose -dir $(MIGRATION_DIR) mysql "$(DB_URL)" down
+
+# Reset the database
+.PHONY: reset
+reset:
+	@echo "Resetting the database (rolling back all migrations)..."
+	docker-compose exec blu_installment goose -dir $(MIGRATION_DIR) mysql "$(DB_URL)" reset
+
+# Clean up all containers, images, and volumes
+.PHONY: clean
+clean:
+	@echo "Cleaning up Docker resources..."
+	docker-compose down --volumes --rmi all
+
+#####
 
 # Build the Go binary locally with dependency handling
 .PHONY: build-local
